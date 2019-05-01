@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import PaypalExpressBtn from 'react-paypal-express-checkout';
 
-function App() {
+// v1
+// const App =()=> {
+//    const client = {
+//       sandbox: 'AZFIOb6VCajNF5tNoS5cZtoaaYC4OKLsw2QE6W3yPBZ5W-h5nwNXE1hrVAbpFtk06oksWpBcIBligR6Q'
+//     }
+//   return (
+//     <div className="App">
+//       <PaypalExpressBtn client={client} currency={'USD'} total={1.00}/>
+//     </div>
+//   );
+// }
+
+// v2
+const App = () => {
+    const onSuccess = (payment) => {
+      console.log("Payment Successful", payment);
+    }
+    const onCancel = (data) => {
+      console.log("Payment cancelled", data);
+    }
+    const onError = (error) => {
+      console.log("Error", error);
+    }
+    let env = 'sandbox';
+    let currency = 'USD';
+    let  total = 1;
+
+  const client = {
+    sandbox: 'AZFIOb6VCajNF5tNoS5cZtoaaYC4OKLsw2QE6W3yPBZ5W-h5nwNXE1hrVAbpFtk06oksWpBcIBligR6Q'
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PaypalExpressBtn env={env} client={client} currency={currency} total={total} onError={onError} onSuccess={onSuccess} onCancel={onCancel} />
   );
 }
 
